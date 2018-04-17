@@ -246,4 +246,14 @@ public class RolesPermissionServiceImpl implements RolesPermissionService {
         return rolesMapper.findRolesByAccountId(id);
     }
 
+    /**
+     * 查询所有的角色并加载角色拥有的权限列表
+     * @return java.lang.Object
+     * @date 2018/4/17
+     */
+    @Override
+    public List<Roles> findAllRolesWithPermission() {
+        return rolesMapper.findAllWithPermission();
+    }
+
 }

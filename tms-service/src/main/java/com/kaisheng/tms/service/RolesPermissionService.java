@@ -108,4 +108,14 @@ public interface RolesPermissionService {
      * @return java.util.List<com.kaisheng.tms.entity.Roles>
      */
     List<Roles> findRolesByAccountId(Integer id);
+
+    /**
+     * 查询所有的角色并加载角色拥有的权限列表
+     * @date 2018/4/17
+     * @param
+     * @return java.lang.Object
+     */
+    List<Roles> findAllRolesWithPermission();
+
+
 }

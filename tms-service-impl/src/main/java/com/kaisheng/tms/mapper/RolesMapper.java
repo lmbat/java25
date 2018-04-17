@@ -31,4 +31,7 @@ public interface RolesMapper {
     Roles findByIdWithPermission(Integer id);
 
     List<Roles> findRolesByAccountId(Integer id);
+
+    List<Roles> findAllWithPermission();
+
 }

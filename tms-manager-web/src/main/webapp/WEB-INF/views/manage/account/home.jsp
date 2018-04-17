@@ -66,26 +66,20 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <c:forEach items="${accountList}" var="account">
-                            <tr>
-                                <td>${account.accountName}</td>
-                                <td>${account.accountMobile}</td>
-                                <td>
-                                    <c:forEach items="${account.rolesList}" var="roles">
-                                        ${roles.rolesName}
-                                    </c:forEach>
-                                </td>
-                                <td>
-                                        ${account.accountState}
-                                </td>
-                                <td>
-                                    <fmt:formatDate value="${account.createTime}"/>
-                                </td>
-                                <td>
-                                    <a href="/manage/account/${account.id}/edit"><i class="fa fa-edit"></i></a>
-                                </td>
-                            </tr>
-                        </c:forEach>
+                            <c:forEach items="${accountList}" var="account">
+                                <tr>
+                                    <td>${account.accountName}</td>
+                                    <td>${account.accountMobile}</td>
+                                    <td>
+                                        <c:forEach items="${account.rolesList}" var="roles">
+                                            ${roles.rolesName}
+                                        </c:forEach>
+                                    </td>
+                                    <td>${account.accountState}</td>
+                                    <td><fmt:formatDate value="${account.createTime}"/></td>
+                                    <td><a href="/manage/account/${account.id}/edit"><i class="fa fa-edit"></i></a> </td>
+                                </tr>
+                            </c:forEach>
                         </tbody>
                     </table>
                 </div>

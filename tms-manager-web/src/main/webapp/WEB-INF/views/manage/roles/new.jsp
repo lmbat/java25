@@ -58,34 +58,17 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <c:forEach items="${permissionList}" var="permission">
-                                <c:choose>
-                                    <c:when test="${permission.parentId == 0}">
-                                        <tr class="treegrid-${permission.id} treegrid-expanded">
-                                            <th>
-                                                <input type="checkbox" name="permissionId" value="${permission.id}">
-                                            </th>
-                                            <td>${permission.permissionName}</td>
-                                            <td>${permission.permissionCode}</td>
-                                            <td>${permission.url}</td>
-                                            <td>${permission.permissionType}</td>
-
-                                        </tr>
-                                    </c:when>
-                                    <c:otherwise>
-                                        <tr class="treegrid-${permission.id} treegrid-expanded treegrid-parent-${permission.parentId}">
-                                            <th>
-                                                <input type="checkbox" name="permissionId"  value="${permission.id}">
-                                            </th>
-                                            <td>${permission.permissionName}</td>
-                                            <td>${permission.permissionCode}</td>
-                                            <td>${permission.url}</td>
-                                            <td>${permission.permissionType}</td>
-                                        </tr>
-                                    </c:otherwise>
-                                </c:choose>
-
-                            </c:forEach>
+                                <c:forEach items="${permissionList}" var="permission">
+                                    <tr class="treegrid-${permission.id} treegrid-expanded treegrid-parent-${permission.parentId != 0 ? permission.parentId : ''} ">
+                                        <th>
+                                            <input type="checkbox" name="permissionId" value="${permission.id}">
+                                        </th>
+                                        <td>${permission.permissionName}</td>
+                                        <td>${permission.permissionCode}</td>
+                                        <td>${permission.url}</td>
+                                        <td>${permission.permissionType}</td>
+                                    </tr>
+                                </c:forEach>
                             </tbody>
                         </table>
                     </form>
@@ -104,7 +87,7 @@
 <%@include file="../../include/js.jsp"%>
 <script src="/static/plugins/treegrid/js/jquery.treegrid.min.js"></script>
 <script src="/static/plugins/treegrid/js/jquery.treegrid.bootstrap3.js"></script>
-<script src="/static/plugins/iCheck/icheck.min.js"></script>
+<%--<script src="/static/plugins/iCheck/icheck.min.js"></script>--%>
 
 <script>
     $(function () {
