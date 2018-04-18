@@ -256,4 +256,15 @@ public class RolesPermissionServiceImpl implements RolesPermissionService {
         return rolesMapper.findAllWithPermission();
     }
 
+    /**
+     * 根据角色ID查询权限
+     * @param rolesId
+     * @return java.util.List<com.kaisheng.tms.entity.Permission>
+     * @date 2018/4/18
+     */
+    @Override
+    public List<Permission> findAllPermissionByRolesId(Integer rolesId) {
+        return permissionMapper.findAllPermissionByRolesId(rolesId);
+    }
+
 }

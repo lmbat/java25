@@ -2,16 +2,20 @@ package com.kaisheng.tms.shiro;
 
 import com.kaisheng.tms.entity.Account;
 import com.kaisheng.tms.entity.AccountLoginLog;
+import com.kaisheng.tms.entity.Permission;
+import com.kaisheng.tms.entity.Roles;
 import com.kaisheng.tms.service.AccountService;
+import com.kaisheng.tms.service.RolesPermissionService;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
+import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.Date;
+import java.util.*;
 
 public class ShiroRealm extends AuthorizingRealm {
 
@@ -19,6 +23,8 @@ public class ShiroRealm extends AuthorizingRealm {
 
     @Autowired
     private AccountService accountService;
+    @Autowired
+    private RolesPermissionService rolesPermissionService;
 
     /**
      * 判断角色权限
@@ -28,7 +34,32 @@ public class ShiroRealm extends AuthorizingRealm {
      */
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
-        return null;
+        Account account = (Account) principalCollection.getPrimaryPrincipal();
+
+        List<Roles> rolesList = rolesPermissionService.findRolesByAccountId(account.getId());
+
+        List<Permission> permissionList = new ArrayList<>();
+
+        for(Roles roles : rolesList) {
+            List<Permission> rolesPermissionList = rolesPermissionService.findAllPermissionByRolesId(roles.getId());
+            permissionList.addAll(rolesPermissionList);
+        }
+
+        Set<String> rolesNameSet = new HashSet<>();
+        for(Roles roles : rolesList) {
+            rolesNameSet.add(roles.getRolesCode());
+        }
+
+        Set<String> permissionNameSet = new HashSet<>();
+        for(Permission permission : permissionList) {
+            permissionNameSet.add(permission.getPermissionCode());
+        }
+
+        SimpleAuthorizationInfo simpleAuthorizationInfo = new SimpleAuthorizationInfo();
+        simpleAuthorizationInfo.setRoles(rolesNameSet);
+        simpleAuthorizationInfo.setStringPermissions(permissionNameSet);
+
+        return simpleAuthorizationInfo;
     }
 
     /**

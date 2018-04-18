@@ -117,5 +117,11 @@ public interface RolesPermissionService {
      */
     List<Roles> findAllRolesWithPermission();
 
-
+    /**
+     * 根据角色ID查询权限
+     * @date 2018/4/18
+     * @param rolesId
+     * @return java.util.List<com.kaisheng.tms.entity.Permission>
+     */
+    List<Permission> findAllPermissionByRolesId(Integer rolesId);
 }
