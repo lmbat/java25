@@ -13,8 +13,8 @@
     <link rel="stylesheet" href="/static/plugins/iCheck/square/blue.css">
 
 </head>
-<body background="/static/img/1.jpg">
-<%--<body background="/static/img/photo.jpg" class="hold-transition login-page" >--%>
+<%--<body background="/static/img/1.jpg">--%>
+<body class="hold-transition login-page" >
 
 <div class="login-box">
     <div class="login-logo">

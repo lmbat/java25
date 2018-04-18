@@ -99,9 +99,4 @@ public class AccountController {
         return "redirect:/manage/account";
     }
 
-    @GetMapping("/logout")
-    public String logout() {
-        return "index";
-    }
-
 }

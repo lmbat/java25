@@ -152,14 +152,18 @@ public class RolesPermissionServiceImpl implements RolesPermissionService {
         roles.setCreateTime(new Date());
         rolesMapper.insertSelective(roles);
 
-        for(Integer perId : permissionId) {
-            RolesPermissionKey rolesPermissionKey = new RolesPermissionKey();
-            rolesPermissionKey.setPermissionId(perId);
-            rolesPermissionKey.setRolesId(roles.getId());
+        if(permissionId != null) {
+            for (Integer perId : permissionId) {
+                RolesPermissionKey rolesPermissionKey = new RolesPermissionKey();
+                rolesPermissionKey.setPermissionId(perId);
+                rolesPermissionKey.setRolesId(roles.getId());
 
-            rolesPermissionMapper.insert(rolesPermissionKey);
+                rolesPermissionMapper.insert(rolesPermissionKey);
+
+            }
         }
         logger.info("保存角色 {}",roles);
+
     }
 
     /**
