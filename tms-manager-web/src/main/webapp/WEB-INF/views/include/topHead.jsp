@@ -1,3 +1,4 @@
+<%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
 
@@ -26,7 +27,7 @@
                 <li class="dropdown user user-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         <img src="/static/dist/img/default-avatar.png" class="user-image" alt="User Image">
-                        <span class="hidden-xs">李美苏</span>
+                        <span class="hidden-xs"><shiro:principal property="accountName"/></span>
                     </a>
                     <ul class="dropdown-menu">
                         <!-- User image -->
@@ -34,8 +35,8 @@
                             <img src="/static/dist/img/default-avatar.png" class="img-circle" alt="User Image">
 
                             <p>
-                                李美苏
-                                <small>海外事业部</small>
+                                <shiro:principal property="accountName"/>
+                                <small></small>
                             </p>
                         </li>
                         <!-- Menu Footer-->
@@ -44,7 +45,7 @@
                                 <a href="#" class="btn btn-default btn-flat">个人设置</a>
                             </div>
                             <div class="pull-right">
-                                <a href="#" class="btn btn-default btn-flat">安全退出</a>
+                                <a href="/logout" class="btn btn-default btn-flat">安全退出</a>
                             </div>
                         </li>
                     </ul>

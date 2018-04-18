@@ -1,23 +1,69 @@
 package com.kaisheng.tms.shiro;
 
-import org.apache.shiro.authc.AuthenticationException;
-import org.apache.shiro.authc.AuthenticationInfo;
-import org.apache.shiro.authc.AuthenticationToken;
-import org.apache.shiro.realm.Realm;
+import com.kaisheng.tms.entity.Account;
+import com.kaisheng.tms.entity.AccountLoginLog;
+import com.kaisheng.tms.service.AccountService;
+import org.apache.shiro.authc.*;
+import org.apache.shiro.authz.AuthorizationInfo;
+import org.apache.shiro.realm.AuthorizingRealm;
+import org.apache.shiro.subject.PrincipalCollection;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 
-public class ShiroRealm implements Realm {
+import java.util.Date;
+
+public class ShiroRealm extends AuthorizingRealm {
+
+    private Logger logger = LoggerFactory.getLogger(ShiroRealm.class);
+
+    @Autowired
+    private AccountService accountService;
+
+    /**
+     * 判断角色权限
+     * @date 2018/4/17
+     * @param principalCollection
+     * @return org.apache.shiro.authz.AuthorizationInfo
+     */
     @Override
-    public String getName() {
+    protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
         return null;
     }
 
+    /**
+     * 判断登录
+     * @date 2018/4/17
+     * @param authenticationToken
+     * @return org.apache.shiro.authc.AuthenticationInfo
+     */
     @Override
-    public boolean supports(AuthenticationToken authenticationToken) {
-        return false;
-    }
+    protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
+        UsernamePasswordToken usernamePasswordToken = (UsernamePasswordToken) authenticationToken;
+        String accountMobile = usernamePasswordToken.getUsername();
 
-    @Override
-    public AuthenticationInfo getAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
+        if(accountMobile != null) {
+            Account account =  accountService.findByMobile(accountMobile);
+            if(account == null) {
+                throw new UnknownAccountException("找不到账号:" + account);
+            } else {
+                if(Account.STATE_NORMAL.equals(account.getAccountState())) {
+                    logger.info("登录成功 {} {}", account, usernamePasswordToken.getHost());
+
+                    AccountLoginLog accountLoginLog = new AccountLoginLog();
+                    accountLoginLog.setAccountId(account.getId());
+                    accountLoginLog.setLoginTime(new Date());
+                    accountLoginLog.setLoginIp(usernamePasswordToken.getHost());
+
+                    accountService.saveAccountLogin(accountLoginLog);
+
+                    return new SimpleAuthenticationInfo(account, account.getAccountPassword(), getName());
+                } else {
+                    throw new LockedAccountException("账号被禁用或锁定:" + account.getAccountState());
+                }
+            }
+        }
         return null;
     }
+
 }

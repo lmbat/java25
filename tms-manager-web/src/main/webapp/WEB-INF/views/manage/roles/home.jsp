@@ -34,7 +34,7 @@
                 <div class="box-header">
                     <h3 class="box-title">角色列表</h3>
                     <div class="box-tools">
-                        <a href="/manage/roles/new" class="btn btn-success btn-sm"><i class="fa fa-plus"></i>新增角色</a>
+                        <a href="/manage/roles/new" class="btn btn-vimeo btn-sm"><i class="fa fa-plus"></i>新增角色</a>
                     </div>
                 </div>
                 <div class="box-body">

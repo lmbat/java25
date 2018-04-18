@@ -25,7 +25,7 @@
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
         <section class="content-header">
-        <h1>新增权限</h1>
+        <h1>权限管理</h1>
         </section>
 
         <!-- Main content -->

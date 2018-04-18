@@ -1,6 +1,7 @@
 package com.kaisheng.tms.service;
 
 import com.kaisheng.tms.entity.Account;
+import com.kaisheng.tms.entity.AccountLoginLog;
 import com.kaisheng.tms.exception.ServiceException;
 
 import java.util.List;
@@ -64,4 +65,20 @@ public interface AccountService {
      * @return java.util.List<com.kaisheng.tms.entity.Account>
      */
     List<Account> findAllAccountWithRoles();
+
+    /**
+     * 查询手机号码
+     * @date 2018/4/17
+     * @param accountMobile
+     * @return com.kaisheng.tms.entity.Account
+     */
+    Account findByMobile(String accountMobile);
+
+    /**
+     * 保存登陆日志
+     * @date 2018/4/17
+     * @param accountLoginLog
+     * @return void
+     */
+    void saveAccountLogin(AccountLoginLog accountLoginLog);
 }

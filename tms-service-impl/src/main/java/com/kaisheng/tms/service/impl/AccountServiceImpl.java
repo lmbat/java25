@@ -32,6 +32,7 @@ public class AccountServiceImpl implements AccountService{
 
     @Autowired
     private AccountLoginLogMapper accountLoginLogMapper;
+
     @Autowired
     private AccountRolesMapper accountRolesMapper;
 
@@ -88,7 +89,7 @@ public class AccountServiceImpl implements AccountService{
      */
     @Override
     public List<Account> findAllAccountWWithRolesByQueryParam(Map<String, Object> requestParam) {
-        return null;
+        return accountMapper.findAllWithRolesByQueryParam(requestParam);
     }
 
     /**
@@ -172,6 +173,35 @@ public class AccountServiceImpl implements AccountService{
     @Override
     public List<Account> findAllAccountWithRoles() {
         return accountMapper.findAllWithRoles();
+    }
+
+    /**
+     * 查询手机号码
+     * @param accountMobile
+     * @return com.kaisheng.tms.entity.Account
+     * @date 2018/4/17
+     */
+    @Override
+    public Account findByMobile(String accountMobile) {
+        AccountExample accountExample = new AccountExample();
+        accountExample.createCriteria().andAccountMobileEqualTo(accountMobile);
+
+        List<Account> accountList = accountMapper.selectByExample(accountExample);
+        if(accountList != null && !accountList.isEmpty()) {
+            return accountList.get(0);
+        }
+        return null;
+    }
+
+    /**
+     * 保存登陆日志
+     * @param accountLoginLog
+     * @return void
+     * @date 2018/4/17
+     */
+    @Override
+    public void saveAccountLogin(AccountLoginLog accountLoginLog) {
+        accountLoginLogMapper.insertSelective(accountLoginLog);
     }
 
 }

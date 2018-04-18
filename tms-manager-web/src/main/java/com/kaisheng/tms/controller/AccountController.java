@@ -38,11 +38,11 @@ public class AccountController {
     @GetMapping
     public String home(Model model,
                        @RequestParam(required = false) Integer rolesId,
-                       @RequestParam(required = false) String nameOrMobile) {
+                       @RequestParam(required = false) String nameMobile) {
 
         Map<String, Object> requestParam = new HashMap<>();
         requestParam.put("rolesId", rolesId);
-        requestParam.put("nameOrMobile", nameOrMobile);
+        requestParam.put("nameMobile", nameMobile);
 
         model.addAttribute("rolesList", rolespermissionService.findAllRoles());
         model.addAttribute("accountList", accountService.findAllAccountWWithRolesByQueryParam(requestParam));
@@ -97,6 +97,11 @@ public class AccountController {
         accountService.updateAccount(account,rolesIds);
         redirectAttributes.addFlashAttribute("message","修改账号成功");
         return "redirect:/manage/account";
+    }
+
+    @GetMapping("/logout")
+    public String logout() {
+        return "index";
     }
 
 }

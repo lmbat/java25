@@ -25,7 +25,7 @@
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
         <section class="content-header">
-            <h1>新增角色</h1>
+            <h1>角色管理</h1>
         </section>
 
         <!-- Main content -->

@@ -47,12 +47,14 @@
             </div>
             <div class="box">
                 <div class="box-header">
+                    <h2 class="box-title">账号列表</h2>
                     <div class="box-tools">
-                        <a href="/manage/account/new" class="btn btn-success btn-sm">
-                            <i class="fa fa-plus"></i> 新增账号
-                        </a>
+                        <shiro:hasPermission name="account:add">
+                            <a href="/manage/account/new" class="btn btn-vimeo btn-sm"><i class="fa fa-plus"></i>新增账号</a>
+                        </shiro:hasPermission>
                     </div>
                 </div>
+
                 <div class="box-body">
                     <table class="table">
                         <thead>

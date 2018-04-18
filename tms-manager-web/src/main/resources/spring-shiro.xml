@@ -3,19 +3,30 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
+    <bean id="rememberCookie" class="org.apache.shiro.web.servlet.SimpleCookie">
+        <property name="maxAge" value="604800"/>
+        <property name="httpOnly" value="true"/>
+        <property name="name" value="rememberMe"/>
+    </bean>
+    <bean id="rememberMeManager" class="org.apache.shiro.web.mgt.CookieRememberMeManager">
+        <property name="cookie" ref="rememberCookie"/>
+        <property name="cipherKey" value="#{T(org.apache.shiro.codec.Base64).decode('dsadRQWE$@$$WSDSA')}"/>
+    </bean>
+
     <!-- 配置SecurityManager -->
     <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
-        <!--<property name="cacheManager" ref="cacheManager"/>-->
-        <property name="realm" ref="myShiroReaml"/>
+        <property name="cacheManager" ref="cacheManager"/>
+        <property name="realm" ref="myShiroRealm"/>
+        <property name="rememberMeManager" ref="rememberMeManager"/>
     </bean>
 
     <!-- 配置缓存管理器 -->
-   <!-- <bean id="cacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager">
+    <bean id="cacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager">
         <property name="cacheManagerConfigFile" value="classpath:ehcache.xml"/>
-    </bean>-->
+    </bean>
 
     <!-- 配置自定义的Realm -->
-    <bean id="myShiroReaml" class="com.kaisheng.tms.shiro.ShiroRealm"/>
+    <bean id="myShiroRealm" class="com.kaisheng.tms.shiro.ShiroRealm"/>
 
     <!-- 配置生命周期处理器 -->
     <bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor"/>
@@ -37,7 +48,11 @@
             <value>
                 /favicon.ico = anon
                 /static/** = anon
-                /** = authc
+                /logout = logout
+                /manage/account/new = perms[account:add]
+                /** = user
+
+                #/** = authc
             </value>
         </property>
     </bean>

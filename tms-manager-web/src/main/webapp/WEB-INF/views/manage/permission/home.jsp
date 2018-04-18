@@ -36,7 +36,7 @@
                 <div class="box-header">
                     <h2 class="box-title">权限列表</h2>
                     <div class="box-tools">
-                        <a href="/manage/permission/new" class="btn btn-success btn-sm"><i class="fa fa-plus"></i>新增权限</a>
+                        <a href="/manage/permission/new" class="btn btn-vimeo btn-sm"><i class="fa fa-plus"></i>新增权限</a>
                     </div>
                 </div>
                 <%-- box bosy --%>
